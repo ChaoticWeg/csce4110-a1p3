@@ -3,53 +3,82 @@
 
 #include "generator.hpp"
 
-/* generator type */
+
+// define static generator types
 
 GeneratorType GeneratorType::UNIQUE = GeneratorType(InternalGeneratorType::UNIQUE, "unique");
 GeneratorType GeneratorType::LIMITED_RANGE = GeneratorType(InternalGeneratorType::LIMITED_RANGE, "limited");
 GeneratorType GeneratorType::UNKNOWN = GeneratorType(InternalGeneratorType::UNKNOWN, "");
+
+
+// define GeneratorType lookup table by name
 
 std::map<std::string, GeneratorType> GeneratorType::by_name = {
     { GeneratorType::UNIQUE._name, GeneratorType::UNIQUE },
     { GeneratorType::LIMITED_RANGE._name, GeneratorType::LIMITED_RANGE }
 };
 
+
+// define GeneratorType lookup table by ID
+
 std::map<int, GeneratorType> GeneratorType::by_int = {
     { (int) InternalGeneratorType::UNIQUE, GeneratorType::UNIQUE },
     { (int) InternalGeneratorType::LIMITED_RANGE, GeneratorType::LIMITED_RANGE }
 };
 
+
+/*  GeneratorType constructor */
 GeneratorType::GeneratorType(InternalGeneratorType type, const char *name)
 {
     _type = type;
     _name = std::string(name);
 }
 
+
+/*  Look up a GeneratorType by name.
+ *  
+ *  Params:
+ *  - char *name - The name of the GeneratorType (as would be passed on command-line)
+ *
+ *  Returns the desired GeneratorType if exists; else returns GeneratorType::UNKNOWN.
+ */
 GeneratorType GeneratorType::ByName(char *name)
 {
     auto found = by_name.find(std::string(name));
     return found == by_name.end() ? GeneratorType::UNKNOWN : found->second;
 }
 
+
+/*  Look up a GeneratorType by internal ID.
+ *
+ *  Params:
+ *  - int raw - The internal ID of the GeneratorType (as would be stored in Arguments)
+ *
+ *  Returns the desired GeneratorType if exists; else returns GeneratorType::UNKNOWN.
+ */
 GeneratorType GeneratorType::FromInt(int raw)
 {
     auto found = by_int.find(raw);
     return found == by_int.end() ? GeneratorType::UNKNOWN : found->second;
 }
 
-/* generator */
 
+/*  Generator constructor */
 Generator::Generator(int count, GeneratorType type)
 {
     _count = count;
     _type = type;
 }
 
+
+/*  Generator destructor */
 Generator::~Generator()
 {
     DeleteArr();
 }
 
+
+/*  Delete the internal array and set it to nullptr. */
 void Generator::DeleteArr()
 {
     // delete and set _arr to nullptr if it exists
@@ -62,6 +91,12 @@ void Generator::DeleteArr()
 }
 
 
+/*  Generate the desired set of integers based on the type and count given
+ *  to the constructor. Note: directly modifies the internal array, to save
+ *  memory.
+ *
+ *  Returns a pointer to the internal array.
+ */
 int * Generator::Generate()
 {
     // cleanup first

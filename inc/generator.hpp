@@ -2,13 +2,15 @@
 
 #include <map>
 
-/* generator type */
 
+/* Acts as the enclosed type for GeneratorType */
 enum class InternalGeneratorType : unsigned
 {
     UNIQUE, LIMITED_RANGE, UNKNOWN = 99
 };
 
+
+/* An enum-like type of integer generator */
 class GeneratorType
 {
     private:
@@ -33,8 +35,8 @@ class GeneratorType
         static GeneratorType FromInt(int);
 };
 
-/* generator */
 
+/* Generates a set of integers with the given type and size. */
 class Generator
 {
 
