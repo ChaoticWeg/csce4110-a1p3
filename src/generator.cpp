@@ -61,6 +61,7 @@ void Generator::DeleteArr()
     
 }
 
+
 int * Generator::Generate()
 {
     // cleanup first
@@ -82,6 +83,12 @@ int * Generator::Generate()
 }
 
 
+/*  Generate a set of unique integers. Integers may not repeat.
+ *
+ *  Params:
+ *  - int *&arr - Pointer to resultant array (out)
+ *  - int count - Array size
+ */
 void Generator::GenerateUnique(int *&arr, int count)
 {
     srand(time(NULL)); // seed RNG
@@ -100,11 +107,37 @@ void Generator::GenerateUnique(int *&arr, int count)
     }
 }
 
+
+/*  Generate a set of integers with a limited range (1% of array size).
+ *  Integers may repeat.
+ *  
+ *  Params:
+ *  - int *&arr - Pointer to resultant array (out)
+ *  - int count - Array size
+ */
 void Generator::GenerateLimited(int *&arr, int count)
 {
+    srand(time(NULL)); // seed RNG
     arr = new int[count];
+
+    int range = count / 100;
+    for (int i = 0; i < count; i++)
+    {
+        arr[i] = rand() % range;
+    }
 }
 
+
+/*  Checks to see whether the array already contains the given integer.
+ *  Only useful when generating a set of unique integers.
+ *
+ *  Params:
+ *  - int *arr   - Array to search through
+ *  - int count  - Array size
+ *  - int target - Integer to search the array for
+ *
+ *  Returns true if the array contains the integer; else returns false.
+ */
 bool Generator::ArrayContains(int *arr, int count, int target)
 {
     for (int i = 0; i < count; i++)
