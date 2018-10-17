@@ -32,7 +32,8 @@ done
 
 # sort!
 
-# TODO
+bash "${THIS_DIR}/run/countingsort.sh"
+bash "${THIS_DIR}/run/quicksort.sh"
 
 # clean up
 

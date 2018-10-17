@@ -24,8 +24,6 @@ for infile in "100k" "500k" "1m"; do
     echo ">>> quicksorting integers from ${THIS_INFILE}"
     "${OUT_DIR}/sort/quicksort.out" "${THIS_INFILE}" > "${THIS_OUTFILE}"
 
-    echo ">>> checking that ${THIS_OUTFILE} is properly sorted"
     "${OUT_DIR}/check.out" sorted "${THIS_OUTFILE}"
-
     [[ $? -ne 0 ]] && echo "!!! ${THIS_OUTFILE} may not be properly sorted"
 done
