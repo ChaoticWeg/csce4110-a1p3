@@ -11,7 +11,7 @@ make generate
 [[ $? -ne 0 ]] && echo "!!! failed to build 'generate'" && exit
 popd >/dev/null 2>&1
 
-DATA_DIR="$(realpath "${THIS_DIR}/../data")"
+DATA_DIR="$(realpath "${THIS_DIR}/../data/unsorted")"
 echo ">>> generating numbers if we need to..."
 
 # generate unique ints

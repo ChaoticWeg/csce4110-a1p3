@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-DATA_DIR="$(realpath "${THIS_DIR}/../data")"
+DATA_DIR="$(realpath "${THIS_DIR}/../data/unsorted")"
 OUT_DIR="$(realpath "${THIS_DIR}/../out")"
 pushd "${THIS_DIR}" >/dev/null 2>&1
 
