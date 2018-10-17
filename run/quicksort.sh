@@ -19,7 +19,7 @@ popd >/dev/null 2>&1
 
 for infile in "100k" "500k" "1m"; do
     THIS_INFILE="${DATA_DIR}/unsorted/${infile}_unique.dat"
-    THIS_OUTFILE="${DATA_DIR}/sorted/${infile}_unique.dat"
+    THIS_OUTFILE="${DATA_DIR}/sorted/quicksort_all/${infile}_unique.dat"
 
     echo ">>> quicksorting integers from ${THIS_INFILE}"
     "${OUT_DIR}/sort/quicksort.out" "${THIS_INFILE}" > "${THIS_OUTFILE}"
