@@ -17,8 +17,15 @@ MAKE_OK=$?
 
 popd >/dev/null 2>&1
 
-echo ">>> using 'quicksort' for 100k, 500k, and 1m ints"
+for infile in "100k" "500k" "1m"; do
+    THIS_INFILE="${DATA_DIR}/unsorted/${infile}_unique.dat"
+    THIS_OUTFILE="${DATA_DIR}/sorted/${infile}_unique.dat"
 
-"${OUT_DIR}/sort/quicksort.out" "${DATA_DIR}/unsorted/100k_unique.dat" > "${DATA_DIR}/sorted/quicksort_all/100k_unique.dat"
-"${OUT_DIR}/sort/quicksort.out" "${DATA_DIR}/unsorted/500k_unique.dat" > "${DATA_DIR}/sorted/quicksort_all/500k_unique.dat"
-"${OUT_DIR}/sort/quicksort.out" "${DATA_DIR}/unsorted/1m_unique.dat" > "${DATA_DIR}/sorted/quicksort_all/1m_unique.dat"
+    echo ">>> quicksorting integers from ${THIS_INFILE}"
+    "${OUT_DIR}/sort/quicksort.out" "${THIS_INFILE}" > "${THIS_OUTFILE}"
+
+    echo ">>> checking that ${THIS_OUTFILE} is properly sorted"
+    "${OUT_DIR}/check.out" sorted "${THIS_OUTFILE}"
+
+    [[ $? -ne 0 ]] && echo "!!! ${THIS_OUTFILE} may not be properly sorted"
+done
