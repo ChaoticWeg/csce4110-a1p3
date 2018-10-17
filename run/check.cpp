@@ -1,23 +1,55 @@
 #include <iostream>
-#include <fstream>
+#include <cctype>
+#include <string>
 #include <list>
 
 #include "ints_in.hpp"
 #include "bst.hpp"
 
+bool CheckUnique(const std::list<int> &ints);
+bool CheckSorted(const std::list<int> &ints);
+
 int main(int argc, char **argv)
 {
-    if (argc != 2)
+    if (argc != 3)
     {
-        std::cerr << "usage: " << argv[0] << " <file>\n";
+        std::cerr << "usage: " << argv[0] << " <unique|sorted> <file>\n";
         return 1;
     }
-    
-    BinaryTree tree;
-    std::list<int> duplicates;
+
+    std::cerr << argv[2] << ": " << argv[1] << "?\n";
 
     std::list<int> ints;
-    IntsIn::ReadFile(argv[1], ints);
+    IntsIn::ReadFile(argv[2], ints);
+
+    bool ok = false;
+
+    std::string arg(argv[1]);
+
+    if (arg.compare("unique") == 0)
+    {
+        ok = CheckUnique(ints);
+    }
+
+    else if (arg.compare("sorted") == 0)
+    {
+        ok = CheckSorted(ints);
+    }
+
+    else
+    {
+        std::cerr << "unknown check type '" << argv[1] << "'\n";
+        return 99;
+    }
+
+    return ok ? 0 : 2;
+}
+
+
+bool CheckUnique(const std::list<int> &ints)
+{
+    BinaryTree tree;
+    std::list<int> duplicates;
 
     for (auto it = ints.begin(); it != ints.end(); it++)
     {
@@ -27,7 +59,23 @@ int main(int argc, char **argv)
             duplicates.push_back(thisInt);
     }
 
-    std::cerr << argv[1] << ": " << tree.GetSize() << " known ints; " << duplicates.size() << " duplicates\n";
+    return duplicates.size() == 0;
+}
 
-    return duplicates.size();
+bool CheckSorted(const std::list<int> &ints)
+{
+    int lastInt = -1,
+        thisInt;
+    
+    for (auto it = ints.begin(); it != ints.end(); it++)
+    {
+        thisInt = *it;
+
+        if (thisInt < lastInt)
+            return false;
+        
+        lastInt = thisInt;
+    }
+
+    return true;
 }

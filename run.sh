@@ -12,7 +12,7 @@ make clean
 
 RUN_DIR="$(realpath "${THIS_DIR}/run")"
 bash "${RUN_DIR}/generate.sh"
-bash "${RUN_DIR}/check.sh"
+bash "${RUN_DIR}/check_unique.sh"
 
 # clean up
 
