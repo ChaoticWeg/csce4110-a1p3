@@ -2,6 +2,7 @@
 #include <fstream>
 #include <list>
 
+#include "ints_in.hpp"
 #include "bst.hpp"
 
 int main(int argc, char **argv)
@@ -15,12 +16,12 @@ int main(int argc, char **argv)
     BinaryTree tree;
     std::list<int> duplicates;
 
-    std::fstream file(argv[1], std::ios::in);
+    std::list<int> ints;
+    IntsIn::ReadFile(argv[1], ints);
 
-    std::string line;
-    while (std::getline(file, line, ';'))
+    for (auto it = ints.begin(); it != ints.end(); it++)
     {
-        int thisInt = std::stoi(line);
+        int thisInt = *it;
 
         if (!tree.Insert(thisInt))
             duplicates.push_back(thisInt);

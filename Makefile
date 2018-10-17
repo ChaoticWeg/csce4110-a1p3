@@ -2,14 +2,19 @@ INCDIR=inc
 SRCDIR=src
 OUTDIR=out
 BINDIR=bin
+RUNDIR=run
 
 CC=g++
 
-.PHONY: all clean generate check
+.PHONY: all clean generate check sorts quicksort countingsort
 
-all: generate check
+all: generate check quicksort 
 generate: $(OUTDIR)/generate.out
 check: $(OUTDIR)/check.out
+
+sorts: quicksort countingsort
+quicksort: $(OUTDIR)/sort/quicksort.out
+countingsort: $(OUTDIR)/sort/countingsort.out
 
 
 # remove all output files
@@ -21,14 +26,26 @@ clean:
 
 # build integer-generation files
 
-$(OUTDIR)/generate.out: generate.cpp args gen
+$(OUTDIR)/generate.out: $(RUNDIR)/generate.cpp args gen
 	$(CC) -I$(INCDIR) -L$(BINDIR) -largs -lgen -o $@ $<
 
 
 # build uniqueness-checking files
 
-$(OUTDIR)/check.out: check.cpp bst
+$(OUTDIR)/check.out: $(RUNDIR)/check.cpp bst
 	$(CC) -I$(INCDIR) -L$(BINDIR) -lbst -o $@ $<
+
+
+# quicksort algorithm
+
+$(OUTDIR)/sort/quicksort.out: $(SRCDIR)/sort/quicksort.cpp
+	$(CC) -I$(INCDIR) -o $@ $<
+
+
+# counting-sort algorithm
+
+$(OUTDIR)/sort/countingsort.out: $(SRCDIR)/sort/countingsort.cpp
+	$(CC) -I$(INCDIR) -o $@ $<
 
 
 # argument-parsing library (written by me)
