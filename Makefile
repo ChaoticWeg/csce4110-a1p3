@@ -8,7 +8,7 @@ CC=g++
 
 .PHONY: all clean generate check sorts quicksort countingsort
 
-all: generate check quicksort 
+all: generate check sorts
 generate: $(OUTDIR)/generate.out
 check: $(OUTDIR)/check.out
 
@@ -22,6 +22,7 @@ countingsort: $(OUTDIR)/sort/countingsort.out
 clean:
 	@find bin -type f -exec rm -f {} +
 	@find out -name '*.out' -type f -exec rm -f {} +
+	@bash "$(RUNDIR)/clean_data.sh"
 
 
 # build integer-generation files
