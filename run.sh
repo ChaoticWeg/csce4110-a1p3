@@ -5,14 +5,34 @@ pushd "${THIS_DIR}" >/dev/null 2>&1
 
 # clean and make all
 
+echo ">>> cleaning..."
 make clean
-[[ $? -ne 0 ]] && echo "failed to clean" && exit
+[[ $? -ne 0 ]] && echo "!!! failed to clean" && exit
 
-# run scripts
+echo ">>> building..."
+make all
+[[ $? -ne 0 ]] && echo "!!! failed to build" && exit
 
-RUN_DIR="$(realpath "${THIS_DIR}/run")"
-bash "${RUN_DIR}/generate.sh"
-bash "${RUN_DIR}/check_unique.sh"
+# generate and check uniqueness of number sets
+
+DATA_DIR="$(realpath "${THIS_DIR}/data")"
+
+for type in limited unique; do
+    echo ">>> generating $type ints if we need to..."
+
+    for size in 100k 500k 1m; do
+        case $size in 100k) count_arg="100000";; 500k) count_arg="500000";; 1m) count_arg="1000000";; *) count_arg="0";; esac
+
+        filepath="$(realpath "${DATA_DIR}/unsorted/${size}_${type}.dat")"
+        [[ ! -f "${filepath}" ]] && echo "!!! need $size $type ints. generating..." && "${THIS_DIR}/out/generate.out" --count $count_arg --type $type > "${filepath}"
+        [[ "${type}" == "unique" ]] && [[ -f "${filepath}" ]] && "${THIS_DIR}/out/check.out" unique "${filepath}"
+    done
+
+done
+
+# sort!
+
+# TODO
 
 # clean up
 

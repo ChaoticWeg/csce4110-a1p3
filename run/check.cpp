@@ -17,7 +17,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    std::cerr << argv[2] << ": " << argv[1] << "?\n";
+    std::cerr << argv[2] << ": " << argv[1] << "?  ";
 
     std::list<int> ints;
     IntsIn::ReadFile(argv[2], ints);
@@ -42,6 +42,7 @@ int main(int argc, char **argv)
         return 99;
     }
 
+    std::cerr << (ok ? "YES" : "NO") << "\n";
     return ok ? 0 : 2;
 }
 
