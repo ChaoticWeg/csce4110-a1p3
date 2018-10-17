@@ -1,8 +1,11 @@
+#pragma once
+
 #include <fstream>
 #include <list>
 
 namespace IntsIn
 {
+    /* Populate the list with ints read from the file */
     void ReadFile(char *filename, std::list<int> &ints)
     {
         ints.clear();
