@@ -3,6 +3,15 @@
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 pushd "${THIS_DIR}" >/dev/null 2>&1
 
+# create directories ignored by git
+
+mkdir -p bin
+mkdir -p out/sort
+mkdir -p data/unsorted
+for sorttype in countingsort quicksort_all quicksort_insertion; do
+    mkdir -p data/sorted/$sorttype
+done
+
 # clean and make all
 
 echo ">>> cleaning..."
