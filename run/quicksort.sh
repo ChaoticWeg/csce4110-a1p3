@@ -3,9 +3,9 @@
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 pushd "${THIS_DIR}" >/dev/null 2>&1
 
-SORTS_DIR="${THIS_DIR}/../out/sort"
-OUT_DIR="${THIS_DIR}/../out"
-DATA_DIR="${THIS_DIR}/../data"
+SORTS_DIR="$(readlink -f "${THIS_DIR}/../out/sort")"
+OUT_DIR="$(readlink -f "${THIS_DIR}/../out")"
+DATA_DIR="$(readlink -f "${THIS_DIR}/../data")"
 
 pushd "${THIS_DIR}/.." >/dev/null 2>&1
 
