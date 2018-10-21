@@ -4,7 +4,7 @@ OUTDIR=out
 BINDIR=bin
 RUNDIR=run
 
-CC=g++
+CC=g++ --std=c++11
 
 .PHONY: all clean generate check sorts quicksort countingsort
 
