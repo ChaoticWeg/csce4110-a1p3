@@ -3,11 +3,11 @@
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 pushd "${THIS_DIR}" >/dev/null 2>&1
 
-SORTS_DIR="$(realpath "${THIS_DIR}/../out/sort")"
-OUT_DIR="$(realpath "${THIS_DIR}/../out")"
-DATA_DIR="$(realpath "${THIS_DIR}/../data")"
+SORTS_DIR="${THIS_DIR}/../out/sort"
+OUT_DIR="${THIS_DIR}/../out"
+DATA_DIR="${THIS_DIR}/../data"
 
-pushd "$(realpath "${THIS_DIR}/..")" >/dev/null 2>&1
+pushd "${THIS_DIR}/.." >/dev/null 2>&1
 
 echo ">>> building 'quicksort'"
 make quicksort
